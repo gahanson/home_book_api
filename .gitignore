@@ -1,0 +1,10 @@
+*.pyc
+__pycache__
+db.sqlite3
+migrations
+/static
+/media
+/sent_emails
+.DS_Store
+.env
+.vscode
