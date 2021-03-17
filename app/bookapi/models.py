@@ -10,6 +10,17 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+class AvailableBook(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE)
+    title = models.CharField(max_length=255, blank=True)
+    author = models.CharField(max_length=255, blank=True)
+    
+    class Meta:
+        ordering = ['title']
+    
+    def __str__(self):
+        return self.title
+
 class SingletonModel(models.Model):
     '''
     base class to use for table with one row to store app settings

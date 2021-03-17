@@ -8,9 +8,9 @@ from rest_framework.permissions import IsAuthenticated
 
 from rest_framework import filters
 
-from .serializers import BookSerializer
+from .serializers import BookSerializer, AvailableBookSerializer
 
-from .models import Book, bookapiUserSettings, bookapiSourceFiles
+from .models import Book, AvailableBook, bookapiUserSettings, bookapiSourceFiles
 
 from .extra_methods import BookProcessing
 
@@ -28,6 +28,14 @@ class BookViewSet(viewsets.ModelViewSet):
 	serializer_class = BookSerializer
 	filter_backends = [filters.SearchFilter]
 	search_fields = ['title'] 
+
+class AvailableBookViewSet(viewsets.ModelViewSet): 
+	permission_classes = (IsAuthenticated,)
+	
+	queryset = AvailableBook.objects.all()  
+	serializer_class = AvailableBookSerializer
+	filter_backends = [filters.SearchFilter]
+	search_fields = ['title', 'author', 'book'] 
 
 @api_view(['GET', 'POST'])
 @permission_classes((IsAuthenticated, ))

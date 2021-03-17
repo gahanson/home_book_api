@@ -120,10 +120,14 @@ class BookProcessing(object):
         deletedBooks = self.__RemovedBooks(filesOnServer, filesPresentLastRefresh)
         
         if newBookFiles:
+            # count = 0 #dev only
             for book in newBookFiles:
+                # if count > 10: #dev only
+                #     break
                 if ('.epub' in book) or ('.pdf' in book): 
                     addResult = self.__AddSingleBook(book)
                     addReturnData.append(addResult)
+                    # count = count + 1 #dev only
         
         if deletedBooks:
             for book in deletedBooks:
