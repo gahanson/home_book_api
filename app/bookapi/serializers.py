@@ -6,7 +6,7 @@ class BookSerializer(serializers.HyperlinkedModelSerializer):
     
     class Meta:
         model = Book
-        fields = ('url','id','title', 'remote_url')
+        fields = ('url','id','local_path', 'remote_url', 'viewer_path')
 
 class AvailableBookSerializer(serializers.HyperlinkedModelSerializer):
     book = BookSerializer(read_only=True)

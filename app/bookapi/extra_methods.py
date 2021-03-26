@@ -1,6 +1,6 @@
-import json
-import urllib
+import os, json, urllib
 from urllib.request import pathname2url, urlretrieve
+from pathlib import Path
 
 from django.apps import apps
 
@@ -44,6 +44,21 @@ class BookProcessing(object):
 
         return returnValue
 
+    def __getViewerPath(self, remoteUrl):
+        fileExt = Path(remoteUrl).suffix
+        ip_address = os.getenv("VIEWER_IP_ADDRESS")
+
+        epubBasePath = 'epub-viewer/index.html?bookPath='
+        pdfBasePath = 'pdf-viewer/web/viewer.html?file='
+        viewerPath = 'unknown'
+
+        if (fileExt == '.pdf'):
+            viewerPath = pdfBasePath + remoteUrl
+        elif (fileExt == '.epub'):
+            viewerPath = epubBasePath + remoteUrl
+
+        return viewerPath
+
     def __AddSingleBook(self, file_path):
         """
         - add a single book file to the database
@@ -57,10 +72,13 @@ class BookProcessing(object):
        
         book_url = info.source_ip+urllib.parse.quote(file_path[1:])
 
+        viewPath = self.__getViewerPath(book_url)
+
         if Book.objects.filter(remote_url=book_url).exists() == False:
             Book.objects.create(
-                title = file_path[1:],
+                local_path = file_path[1:],
                 remote_url = book_url,
+                viewer_path= viewPath
             )
             returnData.append({"saved":file_path[1:]})
         else:
