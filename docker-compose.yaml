@@ -12,7 +12,4 @@ services:
 networks:
     default:
         external:
-            name: macminimanualnetwork1
-
-# manually run this before creating containers:
-#   docker network create localcommonnetwork1
+            name: dockernetwork1
