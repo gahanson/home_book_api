@@ -99,16 +99,17 @@ class BookProcessing(object):
 
     def GetUserSettings(self):
         info = bookapiUserSettings.load()
-        returnVal = {{"source_ip":info.source_ip},{"source_script_path":info.source_script_path}}
+        returnVal = {{"source_ip":info.source_ip},{"source_script_path":info.source_script_path},{"source_viewer_base_url":info.source_viewer_base_url}}
         return returnVal
 
-    def SetUserSettings(self, sourceIP, sourceScriptPath):
+    def SetUserSettings(self, sourceIP, sourceScriptPath, sourceUrlPath):
         
         try:
             info = bookapiUserSettings.load()
 
             info.source_ip = sourceIP
             info.source_script_path = sourceScriptPath
+            info.source_viewer_base_url = sourceUrlPath
 
             info.save()
             

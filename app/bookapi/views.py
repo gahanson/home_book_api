@@ -50,6 +50,7 @@ def settings(request):
 		objSettings = bookapiUserSettings.objects.first()
 		objSettings.source_ip = request.POST.get('source_ip')
 		objSettings.source_script_path = request.POST.get('source_script_path')
+		objSettings.source_viewer_base_url = request.POST.get('source_viewer_base_url')
 		objSettings.save()
 		returnData = bookapiUserSettings.objects.all().values()
 		return Response(returnData)
